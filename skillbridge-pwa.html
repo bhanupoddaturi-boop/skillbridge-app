@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SkillBridge">
+<meta name="application-name" content="SkillBridge">
+<meta name="theme-color" content="#3d6b4f">
+<meta name="description" content="Bridge your skills to India's social impact sector">
+<title>SkillBridge</title>
+<link rel="manifest" id="manifest-placeholder">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%233d6b4f'/%3E%3Ctext x='96' y='130' text-anchor='middle' font-size='110' font-family='system-ui'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--g:#3d6b4f;--gd:#2b4d39;--gl:#eaf2ec;--g2:#d0e8d8;--o:#d97706;--ol:#fef3c7;--bl:#2563eb;--bll:#eff6ff;--ink:#0f172a;--ink2:#334155;--mid:#64748b;--soft:#94a3b8;--xsoft:#cbd5e1;--bg:#f8fafc;--bdr:#e2e8f0;--bdr2:#f1f5f9;--shadow:0 1px 3px rgba(0,0,0,.07);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;font-family:'DM Sans',sans-serif;background:#fff;overflow:hidden;-webkit-overflow-scrolling:touch}
+/* Desktop: show phone frame. Mobile: full screen */
+#wrap{width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#06090f}
+#phone{position:relative;background:#fff}
+.notch{display:none}
+#scr{width:100%;height:100%;overflow:hidden;position:relative;background:#fff}
+@media(max-width:430px){
+  body{background:#fff}
+  #wrap{background:#fff;display:block}
+  #phone{width:100vw;height:100dvh;border-radius:0;padding:0;box-shadow:none}
+  #scr{border-radius:0;height:100dvh}
+  .pg{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+  .bn{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+}
+@media(min-width:431px){
+  #phone{width:390px;height:844px;background:#111;border-radius:52px;padding:11px;box-shadow:0 0 0 1px #1e2a3a,0 40px 100px rgba(0,0,0,.95);flex-shrink:0}
+  .notch{display:block;position:absolute;top:18px;left:50%;transform:translateX(-50%);width:118px;height:28px;background:#111;border-radius:16px;z-index:200}
+  #scr{border-radius:42px}
+}
+.pg{position:absolute;inset:0;overflow-y:auto;display:none;flex-direction:column;background:#fff;scrollbar-width:none}
+.pg::-webkit-scrollbar{display:none}
+.pg.on{display:flex}
+/* header */
+.nh{display:flex;align-items:center;padding:max(52px,calc(44px + env(safe-area-inset-top))) 16px 10px;gap:8px;flex-shrink:0}
+.nt{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--ink);flex:1;text-align:center}
+.ic{width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:14px;flex-shrink:0;transition:.15s}
+.ic:active{background:var(--bdr)}
+/* nav */
+.bn{position:absolute;bottom:0;left:0;right:0;height:calc(76px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-around;padding:0 8px calc(14px + env(safe-area-inset-bottom,0px));z-index:50}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:5px 10px}
+.ni svg{width:21px;height:21px;fill:none;stroke:var(--soft);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:.15s}
+.ni span{font-size:10px;color:var(--soft);font-weight:500;transition:.15s}
+.ni.on svg{stroke:var(--g)}.ni.on span{color:var(--g);font-weight:700}
+/* progress */
+.pr{height:2px;background:var(--bdr);border-radius:1px;margin-bottom:20px;flex-shrink:0}
+.pf{height:100%;background:var(--g);border-radius:2px;transition:width .35s}
+.bd{flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bd::-webkit-scrollbar{display:none}
+.px{padding:0 16px}
+/* buttons */
+.btn{display:block;width:100%;border:none;border-radius:10px;padding:13px 20px;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;transition:.15s;text-align:center}
+.btn:active{transform:scale(.98)}
+.g{background:var(--g);color:#fff}.g:hover{background:var(--gd)}
+.g:disabled{background:#ddd;color:#aaa;cursor:not-allowed}
+.o{background:transparent;color:var(--g);border:1.5px solid var(--g)}
+.gh{background:transparent;color:var(--mid);border:1.5px solid var(--bdr)}
+.sm{padding:8px 15px;font-size:12px;width:auto;display:inline-block;border-radius:8px}
+/* inputs */
+.inp{width:100%;border:none;border-bottom:1.5px solid var(--bdr);padding:10px 0;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:transparent;outline:none;transition:.15s;margin-bottom:14px}
+.inp:focus{border-color:var(--g)}
+.inp::placeholder{color:var(--soft)}
+.ib{width:100%;border:1.5px solid var(--bdr);border-radius:11px;padding:11px 13px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;outline:none;margin-bottom:10px;transition:.15s;display:block}
+.ib:focus{border-color:var(--g)}
+.ib::placeholder{color:var(--soft)}
+.ta{width:100%;border:1.5px solid var(--bdr);border-radius:11px;padding:11px 13px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;outline:none;resize:none;transition:.15s}
+.ta:focus{border-color:var(--g)}
+.ta::placeholder{color:var(--soft)}
+.sel{width:100%;border:none;border-bottom:1.5px solid var(--bdr);padding:10px 0;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:transparent;outline:none;margin-bottom:14px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;cursor:pointer}
+.lbl{font-size:11px;font-weight:700;color:var(--soft);display:block;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+/* tags */
+.tag{display:inline-block;padding:6px 13px;border-radius:7px;font-size:12px;font-weight:500;border:1.5px solid var(--bdr);background:#fff;color:var(--ink);cursor:pointer;transition:.15s;margin:3px}
+.tag:hover{border-color:var(--g);color:var(--g)}
+.tag.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip{display:inline-flex;align-items:center;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1.5px solid var(--bdr);background:#fff;color:var(--mid);cursor:pointer;white-space:nowrap;transition:.15s}
+.chip.on{background:var(--g);color:#fff;border-color:var(--g)}
+.pref{display:block;width:100%;padding:12px 14px;border:1.5px solid var(--bdr);border-radius:10px;font-size:13px;color:var(--ink);cursor:pointer;margin-bottom:7px;background:#fff;text-align:left;font-family:'DM Sans',sans-serif;transition:.15s}
+.pref.on{border-color:var(--g);color:var(--g);background:var(--gl);font-weight:600}
+/* cards */
+.card{background:#fff;border-radius:12px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:12px;cursor:pointer;transition:.2s;box-shadow:var(--shadow)}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
+.card:active{transform:scale(.99)}
+.ci{width:100%;height:130px;object-fit:cover;display:block}
+.cb{padding:12px 14px}
+.or{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.av{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;font-family:'Sora',sans-serif}
+.ngo-av{width:34px;height:34px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid #e6e2da}
+.on_{font-size:12px;font-weight:700;color:var(--ink)}
+.ot{font-size:11px;color:var(--mid)}
+.vb{font-size:11px;font-weight:700;color:var(--g)}
+.ct{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;font-family:'Sora',sans-serif;line-height:1.3}
+.ps{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.pl{padding:3px 8px;background:var(--bg);border-radius:100px;font-size:11px;color:var(--mid);border:1px solid var(--bdr)}
+.mt{display:flex;gap:10px;flex-wrap:wrap}
+.mi{font-size:11px;color:var(--mid)}
+/* funders */
+.fw{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.ft{padding:2px 7px;background:var(--bg);border:1px solid var(--bdr);border-radius:4px;font-size:10px;font-weight:700;color:var(--mid)}
+/* section header */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.st{font-size:14px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif}
+.sl{font-size:12px;color:var(--g);font-weight:600;cursor:pointer}
+/* search */
+.srch{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:12px;padding:10px 13px;margin-bottom:10px}
+.srch input{border:none;background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink);flex:1;outline:none}
+.srch input::placeholder{color:var(--soft)}
+/* trust panel */
+.tp{background:var(--bg);border-radius:14px;padding:13px;margin-bottom:12px}
+.tpt{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:9px;font-family:'Sora',sans-serif}
+.mb{flex:1;background:#fff;border-radius:9px;padding:9px 6px;text-align:center}
+.mn{font-size:16px;font-weight:800;font-family:'Sora',sans-serif}
+.ml{font-size:10px;color:var(--mid);margin-top:1px}
+/* applicant card */
+.ac{background:#fff;border:1px solid var(--bdr);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.ach{display:flex;align-items:center;gap:10px;padding:12px 14px 8px}
+.alk{display:flex;gap:6px;padding:0 14px 8px}
+.al{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--g);font-weight:700;background:var(--gl);padding:4px 10px;border-radius:100px;cursor:pointer;border:none}
+.aqa{background:var(--bg);border-top:1px solid var(--bdr);padding:10px 14px}
+.ql{font-size:10px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.qt{font-size:12px;color:var(--ink);line-height:1.4;margin-bottom:7px}
+.aac{display:flex;gap:6px;padding:8px 14px 12px}
+.ab{flex:1;padding:8px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:.15s;font-family:'Sora',sans-serif}
+.ay{background:var(--gl);color:var(--g)}.ay:hover{background:var(--g);color:#fff}
+.an{background:#fff0f0;color:#c0392b}.an:hover{background:#c0392b;color:#fff}
+/* misc */
+.ib-{background:#eff6ff;border-radius:10px;padding:12px 13px;display:flex;gap:8px;align-items:flex-start;margin-bottom:14px;border:1px solid #bfdbfe}
+.gb{background:var(--gl);border-radius:11px;padding:12px 13px;margin:12px 0}
+.ob{background:var(--ol);border-radius:9px;padding:10px 12px;margin:10px 0;font-size:13px;color:var(--ink);border-left:3px solid var(--o)}
+.tn{background:var(--gl);border-radius:9px;padding:10px 12px;display:flex;gap:8px;align-items:flex-start}
+.vo{border:1.5px solid var(--bdr);border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;background:#fff;transition:.15s}
+.vo.on{border-color:var(--g);background:var(--gl)}
+.up{border:2px dashed var(--bdr);border-radius:11px;padding:22px;text-align:center;cursor:pointer;transition:.2s;margin:8px 0}
+.up:hover{border-color:var(--g);background:var(--gl)}
+.up.done{border-style:solid;border-color:var(--g);background:var(--gl)}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--bdr);cursor:pointer}
+.sr:last-child{border-bottom:none}
+.tg{width:42px;height:23px;border-radius:100px;background:var(--bdr);position:relative;cursor:pointer;transition:.25s;flex-shrink:0}
+.tg.on{background:var(--g)}
+.tg::after{content:'';width:17px;height:17px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:.25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tg.on::after{left:22px}
+.sp{display:inline-block;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600}
+.spg{background:var(--gl);color:var(--g)}
+.spo{background:var(--ol);color:var(--o)}
+.spb{background:#eef0ff;color:#4a5adf}
+.spd{background:#fff0f0;color:#c0392b}
+/* stats */
+.sr_{display:flex;gap:7px;margin-bottom:14px}
+.sb_{flex:1;text-align:center;background:var(--bg);border-radius:11px;padding:10px 4px;border:1px solid var(--bdr)}
+.sn{font-size:18px;font-weight:800;color:var(--g);font-family:'Sora',sans-serif}
+.sl_{font-size:10px;color:var(--mid)}
+.div{height:1px;background:var(--bdr);margin:12px 0}
+/* role cards */
+.rc{border-radius:18px;padding:20px;cursor:pointer;transition:.2s;margin-bottom:12px}
+.rc:hover{transform:scale(1.02)}
+.rc:active{transform:scale(.99)}
+.ri{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:10px}
+.rt{font-size:17px;font-weight:700;color:#fff;font-family:'Sora',sans-serif;margin-bottom:2px}
+.rd{font-size:12px;color:rgba(255,255,255,.65);line-height:1.4}
+/* hero */
+.hr{position:relative;flex-shrink:0}
+.hr img{width:100%;height:185px;object-fit:cover;display:block}
+.hov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05),rgba(10,20,14,.85))}
+.hb{position:absolute;bottom:0;left:0;right:0;padding:12px 16px}
+/* funder badge */
+.fb{display:flex;align-items:center;gap:6px;border:1px solid var(--bdr);border-radius:8px;padding:7px 10px;background:#fff;flex:1;min-width:130px}
+/* otp */
+.ob_{width:42px;height:48px;border:1.5px solid var(--bdr);border-radius:10px;text-align:center;font-size:18px;font-weight:700;color:var(--ink);outline:none;transition:.15s;background:#fff;font-family:'Sora',sans-serif}
+.ob_:focus{border-color:var(--g)}
+/* form section */
+.fs{background:var(--bg);border-radius:14px;padding:14px;margin-bottom:12px}
+.ft_{font-size:13px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:11px}
+/* modal */
+.mo{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:28px;z-index:300}
+.mc{background:#fff;border-radius:20px;padding:28px 22px;text-align:center;width:100%}
+/* project card */
+.pc{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:13px;margin-bottom:10px}
+/* profile link */
+.pl_{display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 0}
+.pio{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+/* notif */
+.ni_{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--bdr)}
+.nc{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+
+/* ─── Google Calendar ─────────────────────────────────────────── */
+.cal-cell{aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative;font-size:13px;font-weight:500;color:var(--ink)}
+.cal-cell:hover{background:var(--bg)}
+.cal-cell.today{background:var(--g);color:#fff;font-weight:700}
+.cal-cell.sel{background:var(--ink);color:#fff;font-weight:700}
+.cal-cell.inactive{color:var(--soft);cursor:default}
+.cal-cell.inactive:hover{background:transparent}
+.cal-cell .ev-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);display:flex;gap:2px}
+.ev-dot-pip{width:4px;height:4px;border-radius:50%;background:var(--g)}
+.cal-cell.today .ev-dot-pip{background:#fff}
+.cal-cell.sel .ev-dot-pip{background:rgba(255,255,255,.7)}
+.gcal-event{display:flex;gap:10px;align-items:center;padding:11px 13px;background:#fff;border:1px solid var(--bdr);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.gcal-event:hover{border-color:var(--soft)}
+.gcal-color-bar{width:3px;height:36px;border-radius:2px;flex-shrink:0}
+.gcal-event-body{flex:1}
+.gcal-event-title{font-size:13px;font-weight:600;color:var(--ink)}
+.gcal-event-sub{font-size:11px;color:var(--mid);margin-top:2px}
+.gcal-event-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:auto;flex-shrink:0}
+
+/* toast */
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(17,17,17,.9);color:#fff;padding:9px 18px;border-radius:100px;font-size:12px;font-weight:600;opacity:0;transition:.22s;z-index:9999;white-space:nowrap;pointer-events:none;max-width:300px;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+
+<script>
+// ── PWA BOOTSTRAP ─────────────────────────────────────────────────────────
+(function(){
+  // 1. Inject web app manifest via blob
+  var manifest = {
+    name: "SkillBridge",
+    short_name: "SkillBridge",
+    description: "Bridge your skills to India's social impact sector",
+    start_url: "./",
+    display: "standalone",
+    orientation: "portrait",
+    background_color: "#ffffff",
+    theme_color: "#3d6b4f",
+    categories: ["productivity","social"],
+    lang: "en-IN",
+    icons: [
+      {
+        src: "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#3d6b4f"/><text x="96" y="130" text-anchor="middle" font-size="100" font-family="system-ui">🌿</text></svg>'),
+        sizes: "192x192",
+        type: "image/svg+xml",
+        purpose: "any maskable"
+      },
+      {
+        src: "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#3d6b4f"/><text x="256" y="340" text-anchor="middle" font-size="280" font-family="system-ui">🌿</text></svg>'),
+        sizes: "512x512",
+        type: "image/svg+xml",
+        purpose: "any maskable"
+      }
+    ],
+    shortcuts: [
+      { name: "Browse Projects", url: "./", description: "Find volunteer opportunities" },
+      { name: "My Applications", url: "./", description: "Track your applications" }
+    ]
+  };
+  var blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+  var url = URL.createObjectURL(blob);
+  var el = document.getElementById('manifest-placeholder');
+  if(el){ el.href = url; el.rel = 'manifest'; }
+  else {
+    var link = document.createElement('link');
+    link.rel = 'manifest'; link.href = url;
+    document.head.appendChild(link);
+  }
+
+  // 2. Register service worker via blob for offline support
+  if('serviceWorker' in navigator){
+    var swCode = [
+      "var CACHE='skillbridge-v7';",
+      "var ASSETS=['/'];",
+      "self.addEventListener('install',function(e){",
+      "  e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS);}));",
+      "  self.skipWaiting();",
+      "});",
+      "self.addEventListener('activate',function(e){",
+      "  e.waitUntil(caches.keys().then(function(keys){",
+      "    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));",
+      "  }));",
+      "  self.clients.claim();",
+      "});",
+      "self.addEventListener('fetch',function(e){",
+      "  e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).catch(function(){return new Response('Offline');});}));",
+      "});"
+    ].join('\n');
+    var swBlob = new Blob([swCode], {type:'application/javascript'});
+    var swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).then(function(reg){
+      console.log('[SkillBridge SW] registered');
+    }).catch(function(e){console.log('[SkillBridge SW]',e);});
+  }
+
+  // 3. Install prompt
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(function(){ showInstallBanner(); }, 3000);
+  });
+
+  window.triggerInstall = function(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(r){
+        if(r.outcome==='accepted') hideInstallBanner();
+        deferredPrompt = null;
+      });
+    } else {
+      // iOS fallback instructions
+      alert('To install: tap the Share button (\u238A) then "Add to Home Screen"');
+    }
+  };
+
+  function showInstallBanner(){
+    var bar = document.getElementById('pwa-bar');
+    if(bar) bar.classList.add('show');
+  }
+  function hideInstallBanner(){
+    var bar = document.getElementById('pwa-bar');
+    if(bar) bar.classList.remove('show');
+  }
+
+  // iOS standalone detection
+  if(window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches){
+    document.documentElement.classList.add('pwa-mode');
+  }
+})();
+</script>
+
+<style>
+/* PWA splash */
+@media(display-mode: standalone),(max-width:430px){
+  .pwa-launch{position:fixed;inset:0;background:#3d6b4f;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:9999;transition:opacity .5s}
+  .pwa-launch.gone{opacity:0;pointer-events:none}
+}
+@media(min-width:431px){.pwa-launch{display:none!important}}
+</style>
+</head>
+<body>
+<div class="pwa-launch" id="pwa-launch">
+  <div style="text-align:center">
+    <div style="width:72px;height:72px;background:rgba(255,255,255,.15);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:2px solid rgba(255,255,255,.2)">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 01-7 17c2-4 2-8 7-17z"/><path d="M12 2c5 9 5 13 7 17a10 10 0 01-7-17z"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+    </div>
+    <p style="color:#fff;font-family:'Sora',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.03em">SkillBridge</p>
+    <p style="color:rgba(255,255,255,.5);font-size:13px;margin-top:4px">Bridge skills to social impact</p>
+  </div>
+</div>
+<div id="wrap"><div id="phone">
+  <div class="notch"></div>
+  <div id="scr">
+  <div id="toast"></div>
+
+<!--  SPLASH  -->
+<div class="pg on" id="p-splash">
+  <div style="flex:1;background:#0c1e13;display:flex;flex-direction:column;position:relative;overflow:hidden">
+    <!-- India social impact photo -->
+    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,30,19,.2),rgba(12,30,19,.9) 55%,#0c1e13 100%)"></div>
+    <div style="flex:1;position:relative;z-index:2;display:flex;align-items:flex-end">
+      <div style="padding:0 24px 4px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <div style="width:36px;height:36px;background:var(--g);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 01-7 17c2-4 2-8 7-17z"/><path d="M12 2c5 9 5 13 7 17a10 10 0 01-7-17z"/><line x1="12" y1="22" x2="12" y2="12"/></svg></div>
+          <span style="font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.03em">SkillBridge</span>
+        </div>
+        <p style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:16px">Bridge skills to social impact</p>
+        <div style="display:flex;gap:8px;margin-bottom:26px">
+          <div style="display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border-radius:100px;padding:5px 11px"><span style="color:var(--g);font-size:11px"></span><span style="font-size:11px;color:rgba(255,255,255,.6)">Verified NGOs</span></div>
+          <div style="display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border-radius:100px;padding:5px 11px"><span style="color:var(--o);font-size:11px"></span><span style="font-size:11px;color:rgba(255,255,255,.6)">500+ Matches</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:0 20px 44px;position:relative;z-index:2;flex-shrink:0">
+      <p style="font-size:13px;font-weight:600;color:rgba(255,255,255,.7);text-align:center;margin-bottom:12px;font-family:'Sora',sans-serif">I am a…</p>
+      <div class="rc" style="background:linear-gradient(135deg,#3d6b4f,#2b4d39)" onclick="setRole('v');go('p-vs1')">
+        <div class="ri"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="rt">Volunteer</div>
+        <div class="rd">Find opportunities matching your skills</div>
+      </div>
+      <div class="rc" style="background:linear-gradient(135deg,#6b3d4f,#4d2b39)" onclick="setRole('n');go('p-ns1')">
+        <div class="ri"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="rt">NGO</div>
+        <div class="rd">Connect with skilled professionals</div>
+      </div>
+      <p style="text-align:center;font-size:12px;color:rgba(255,255,255,.3);cursor:pointer;margin-top:2px" onclick="go('p-vs1')">Already have an account? Sign in →</p>
+    </div>
+  </div>
+</div>
+
+<!--  VOL STEP 1  -->
+<div class="pg" id="p-vs1">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-splash')"></button><span style="font-size:11px;color:var(--mid)">1 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:25%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">Create account</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">Choose how to sign up</p>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:4px">
+    <div style="border:2px solid var(--g);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;background:var(--gl);display:flex;align-items:center;gap:12px" onclick="toast('Connecting to LinkedIn…');setTimeout(()=>go('p-vs2'),700)">
+      <div style="width:38px;height:38px;background:#0a66c2;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0">in</div>
+      <div><div style="font-size:14px;font-weight:700;color:var(--ink)">LinkedIn</div><div style="font-size:12px;color:var(--mid)">Pulls your skills automatically</div></div>
+      <span style="margin-left:auto;font-size:11px;font-weight:700;color:var(--g)">Preferred</span>
+    </div>
+    <div style="border:1.5px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;background:#fff;display:flex;align-items:center;gap:12px" onclick="go('p-vs2')">
+      <div style="width:38px;height:38px;background:#f5f5f5;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0"></div>
+      <div><div style="font-size:14px;font-weight:700;color:var(--ink)">Email</div><div style="font-size:12px;color:var(--mid)">Traditional signup</div></div>
+    </div>
+    <div style="border:1.5px solid var(--bdr);border-radius:14px;padding:16px;cursor:pointer;background:#fff;display:flex;align-items:center;gap:12px" onclick="toast('Signing in with Google…');setTimeout(()=>go('p-vs2'),700)">
+      <div style="width:38px;height:38px;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;border:1px solid var(--bdr);font-weight:700;color:#4285f4;font-family:'Sora',sans-serif;flex-shrink:0">G</div>
+      <div><div style="font-size:14px;font-weight:700;color:var(--ink)">Google</div><div style="font-size:12px;color:var(--mid)">Sign in with Google</div></div>
+    </div>
+  </div>
+</div>
+
+<!--  VOL STEP 2 — SKILLS  -->
+<div class="pg" id="p-vs2">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-vs1')"></button><span style="font-size:11px;color:var(--mid)">2 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:50%"></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px">
+      <div><p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:2px">Your skills</p><p style="font-size:13px;color:var(--mid)">Pick up to 3</p></div>
+      <span id="skc" style="font-size:14px;font-weight:700;color:var(--g);font-family:'Sora',sans-serif">0/3</span>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px">
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">Design</p>
+    <span class="tag" onclick="tsk(this)">UX Design</span><span class="tag" onclick="tsk(this)">UI Design</span><span class="tag" onclick="tsk(this)">Graphic Design</span><span class="tag" onclick="tsk(this)">Figma</span><span class="tag" onclick="tsk(this)">Branding</span><span class="tag" onclick="tsk(this)">Illustration</span>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 7px">Engineering</p>
+    <span class="tag" onclick="tsk(this)">React</span><span class="tag" onclick="tsk(this)">JavaScript</span><span class="tag" onclick="tsk(this)">Python</span><span class="tag" onclick="tsk(this)">Node.js</span><span class="tag" onclick="tsk(this)">Web Dev</span><span class="tag" onclick="tsk(this)">Mobile Dev</span><span class="tag" onclick="tsk(this)">SQL</span>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 7px">Marketing</p>
+    <span class="tag" onclick="tsk(this)">SEO</span><span class="tag" onclick="tsk(this)">Content Writing</span><span class="tag" onclick="tsk(this)">Social Media</span><span class="tag" onclick="tsk(this)">Copywriting</span>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 7px">Data</p>
+    <span class="tag" onclick="tsk(this)">Data Analysis</span><span class="tag" onclick="tsk(this)">Excel</span><span class="tag" onclick="tsk(this)">Visualization</span>
+    <div style="padding-top:18px"><button class="btn g" id="skbtn" disabled onclick="go('p-vs3')">Continue</button></div>
+  </div>
+</div>
+
+<!--  VOL STEP 3 — PREFS  -->
+<div class="pg" id="p-vs3">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-vs2')"></button><span style="font-size:11px;color:var(--mid)">3 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:75%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">Preferences</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">For better matching</p>
+  </div>
+  <div class="bd px" style="padding-bottom:80px">
+    <p style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px">Experience</p>
+    <button class="pref" onclick="pp(this)">Student</button><button class="pref" onclick="pp(this)">Junior · 0–2 yrs</button><button class="pref on" onclick="pp(this)">Mid-level · 3–5 yrs</button><button class="pref" onclick="pp(this)">Senior · 6+ yrs</button>
+    <p style="font-size:12px;font-weight:700;color:var(--ink);margin:13px 0 8px">Availability</p>
+    <button class="pref on" onclick="pp(this)">Weekends · 4–8 hrs/wk</button><button class="pref" onclick="pp(this)">Evenings · 4–8 hrs/wk</button><button class="pref" onclick="pp(this)">Flexible · 10+ hrs/wk</button><button class="pref" onclick="pp(this)">One-time project</button>
+    <p style="font-size:12px;font-weight:700;color:var(--ink);margin:13px 0 8px">Work mode</p>
+    <button class="pref on" onclick="pp(this)">Remote</button><button class="pref" onclick="pp(this)">On-site</button><button class="pref" onclick="pp(this)">Hybrid</button>
+    <div style="margin-top:18px"><button class="btn g" onclick="go('p-vs4')">Continue</button></div>
+  </div>
+</div>
+
+<!--  VOL STEP 4 — PHONE  -->
+<div class="pg" id="p-vs4">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-vs3')"></button><span style="font-size:11px;color:var(--mid)">4 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:100%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">Verify phone</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">OTP via WhatsApp</p>
+  </div>
+  <div class="bd px" style="padding-bottom:24px">
+    <input class="ib" id="ph" type="tel" placeholder="+91 98765 43210" style="font-size:15px;margin-bottom:8px">
+    <div class="tn" style="margin-bottom:20px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p style="font-size:12px;color:var(--g);line-height:1.5">Builds trust with NGOs and reduces no-shows</p></div>
+    <button class="btn g" onclick="sendOTP()">Send OTP</button>
+    <div id="otp-s" style="display:none;margin-top:18px">
+      <p style="font-size:13px;color:var(--mid);text-align:center;margin-bottom:12px">Enter 6-digit code</p>
+      <div style="display:flex;gap:7px;justify-content:center;margin-bottom:18px">
+        <input class="ob_" maxlength="1" oninput="oi(this)"><input class="ob_" maxlength="1" oninput="oi(this)"><input class="ob_" maxlength="1" oninput="oi(this)"><input class="ob_" maxlength="1" oninput="oi(this)"><input class="ob_" maxlength="1" oninput="oi(this)"><input class="ob_" maxlength="1" oninput="oi(this)">
+      </div>
+      <button class="btn g" onclick="verOTP()">Verify &amp; continue</button>
+    </div>
+  </div>
+</div>
+
+<!--  HOME  -->
+<div class="pg" id="p-home">
+  <div style="flex-shrink:0">
+    <div class="hr">
+      <!-- India volunteering / community work -->
+      <img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=800&q=80">
+      <div class="hov"></div>
+      <div class="hb" style="display:flex;align-items:flex-end;justify-content:space-between">
+        <div><p style="font-size:11px;color:rgba(255,255,255,.55);margin-bottom:1px">Good morning,</p><h2 style="font-size:19px;color:#fff;font-family:'Sora',sans-serif" id="vname">Priya </h2></div>
+        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;border:2px solid #fff;object-fit:cover">
+      </div>
+      <button onclick="go('p-notif')" style="position:absolute;top:46px;right:14px;background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:4px 10px;font-size:11px;color:#fff;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> <span id="nc">3</span></button>
+    </div>
+    <div class="px" style="padding-top:12px">
+      <div class="sr_">
+        <div class="sb_"><div class="sn">1,240</div><div class="sl_">Volunteers</div></div>
+        <div class="sb_"><div class="sn">380</div><div class="sl_">NGOs</div></div>
+        <div class="sb_"><div class="sn">2.8k</div><div class="sl_">Projects</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:4px">
+    <div class="sh"><span class="st">Featured in Bengaluru</span><span class="sl" onclick="go('p-browse')">See all →</span></div>
+    <div id="hcards"></div>
+  </div>
+  <div class="bn">
+    <div class="ni on" onclick="vn('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni" onclick="vn('browse')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Browse</span></div>
+    <div class="ni" onclick="vn('applied')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Applied</span></div>
+    <div class="ni" onclick="vn('profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!--  BROWSE  -->
+<div class="pg" id="p-browse">
+  <div style="padding:50px 14px 10px;flex-shrink:0;background:#fff;border-bottom:1px solid var(--bdr)">
+    <div class="srch"><span style="font-size:14px;color:var(--soft)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input id="si" type="text" placeholder="Skills, NGOs, cities…" oninput="rBrowse()"></div>
+    <div style="display:flex;gap:5px;align-items:center">
+      <div style="display:flex;gap:5px;flex:1;overflow-x:auto;scrollbar-width:none">
+        <span class="chip on" onclick="fc(this,'all')">All</span>
+        <span class="chip" onclick="fc(this,'design')">Design</span>
+        <span class="chip" onclick="fc(this,'tech')">Tech</span>
+        <span class="chip" onclick="fc(this,'marketing')">Marketing</span>
+        <span class="chip" onclick="fc(this,'data')">Data</span>
+      </div>
+      <button style="border:1.5px solid var(--bdr);border-radius:9px;padding:7px 11px;background:#fff;font-size:12px;cursor:pointer;color:var(--ink);white-space:nowrap;flex-shrink:0" onclick="toast('Filters: Remote  · Weekends ')"> Filter</button>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:10px">
+    <p style="font-size:12px;color:var(--mid);margin-bottom:10px;font-weight:600" id="oc">8 opportunities</p>
+    <div id="blist"></div>
+  </div>
+  <div class="bn">
+    <div class="ni" onclick="vn('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni on" onclick="vn('browse')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Browse</span></div>
+    <div class="ni" onclick="vn('applied')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Applied</span></div>
+    <div class="ni" onclick="vn('profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!--  DETAIL  -->
+<div class="pg" id="p-detail">
+  <div class="hr" style="flex-shrink:0">
+    <img id="di" src="" style="width:100%;height:185px;object-fit:cover;display:block">
+    <div class="hov"></div>
+    <button onclick="back()" style="position:absolute;top:46px;left:12px;width:30px;height:30px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.2);border:none;cursor:pointer">&#8592;</button>
+    <button id="svb" onclick="tSave()" style="position:absolute;top:46px;right:12px;width:30px;height:30px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.2);border:none;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
+  </div>
+  <div class="bd px" style="padding-top:14px;padding-bottom:88px" id="dc"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:#fff;border-top:1px solid var(--bdr)">
+    <button class="btn g" id="acta">Apply </button>
+  </div>
+</div>
+
+<!--  APPLY  -->
+<div class="pg" id="p-apply">
+  <div class="nh"><button class="ic" onclick="back()">&#8592;</button><span class="nt">Apply</span><span style="width:32px"></span></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:6px">
+    <h2 style="font-size:15px;font-family:'Sora',sans-serif;margin-bottom:3px" id="atitle">Apply</h2>
+    <p style="font-size:12px;color:var(--mid);margin-bottom:13px">3 questions · no interview · reply in 48 hrs</p>
+    <div class="ib-"><span style="font-size:13px;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl,#2563eb)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span><p style="font-size:12px;color:#3a5fb8;line-height:1.5">NGO reviews your answers and responds via WhatsApp — no calls needed</p></div>
+    <div style="background:#fff;border:1.5px solid var(--bdr);border-radius:13px;padding:14px;margin-bottom:10px">
+      <p style="font-size:10px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">01 · Portfolio</p>
+      <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.35">Dribbble, Behance or GitHub link</p>
+      <input class="ib" id="q1" type="url" placeholder="https://dribbble.com/you" style="margin-bottom:0">
+    </div>
+    <div style="background:#fff;border:1.5px solid var(--bdr);border-radius:13px;padding:14px;margin-bottom:10px">
+      <p style="font-size:10px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">02 · Experience</p>
+      <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.35">Most relevant project in 2–3 lines</p>
+      <textarea class="ta" id="q2" rows="3" placeholder="e.g. Redesigned learning app for 5,000 students…"></textarea>
+    </div>
+    <div style="background:#fff;border:1.5px solid var(--bdr);border-radius:13px;padding:14px;margin-bottom:16px">
+      <p style="font-size:10px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">03 · Availability</p>
+      <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.35">Can you commit for 4 weeks?</p>
+      <div style="display:flex;gap:8px">
+        <button id="avy" class="pref on" style="flex:1;margin:0;border-radius:9px;padding:10px;font-size:12px" onclick="pa('y')">Yes, I can</button>
+        <button id="avn" class="pref" style="flex:1;margin:0;border-radius:9px;padding:10px;font-size:12px" onclick="pa('n')">Not sure</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn gh" style="flex:1;padding:13px;font-size:13px" onclick="back()">Cancel</button>
+      <button class="btn g" style="flex:2;padding:13px;font-size:13px" onclick="subApp()">Submit </button>
+    </div>
+  </div>
+  <div id="sm" class="mo"><div class="mc">
+    <div style="width:56px;height:56px;background:#e8f5e9;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <h2 style="font-size:18px;margin-bottom:6px;font-family:'Sora',sans-serif">Submitted!</h2>
+    <p style="font-size:13px;color:var(--mid);line-height:1.5;margin-bottom:18px">NGO will respond on WhatsApp within 48 hrs</p>
+    <button class="btn g" onclick="afterApp()">Back to browse</button>
+  </div></div>
+</div>
+
+<!--  APPLIED  -->
+<div class="pg" id="p-applied">
+  <div class="nh"><span style="width:32px"></span><span class="nt">My Applications</span><span style="width:32px"></span></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:8px" id="alist"></div>
+  <div class="bn">
+    <div class="ni" onclick="vn('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni" onclick="vn('browse')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Browse</span></div>
+    <div class="ni on" onclick="vn('applied')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Applied</span></div>
+    <div class="ni" onclick="vn('profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!--  PROFILE  -->
+<div class="pg" id="p-profile">
+  <div style="background:var(--g);padding:50px 16px 20px;flex-shrink:0;position:relative;overflow:hidden">
+    <!-- Indian professional / Bengaluru tech worker context -->
+    <img src="https://images.unsplash.com/photo-1573497019236-61f323342eb9?w=800&q=80" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(45,83,57,.5),rgba(45,83,57,.95))"></div>
+    <div style="position:relative;z-index:2">
+      <div style="display:flex;align-items:flex-end;gap:12px;margin-bottom:12px">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=120&h=120&fit=crop&crop=face" style="width:62px;height:62px;border-radius:50%;border:3px solid #fff;object-fit:cover;display:block">
+          <div style="position:absolute;bottom:0;right:0;background:var(--o);width:18px;height:18px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:800"></div>
+        </div>
+        <div><h2 style="color:#fff;font-size:17px;margin-bottom:1px;font-family:'Sora',sans-serif">Priya Sharma</h2><p style="color:rgba(255,255,255,.6);font-size:12px">UX Designer · Bengaluru</p></div>
+        <button style="margin-left:auto;background:rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:12px;color:#fff;border:none;cursor:pointer" onclick="go('p-editp')">Edit</button>
+      </div>
+      <div style="display:flex;gap:18px">
+        <div style="text-align:center"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif" id="pjc">3</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Projects</div></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">48</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Hours</div></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">4.9</div><div style="font-size:10px;color:rgba(255,255,255,.55)">Rating</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:14px">
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Skills</p>
+    <div id="pskills" style="margin-bottom:14px"></div>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Links</p>
+    <div style="background:#fff;border:1px solid var(--bdr);border-radius:13px;padding:12px;margin-bottom:14px">
+      <div class="pl_" onclick="toast('Opening LinkedIn…')" style="border-bottom:1px solid var(--bdr);padding-bottom:10px;margin-bottom:10px">
+        <div class="pio" style="background:#0a66c2;color:#fff;font-weight:800;font-size:14px">in</div>
+        <div><div style="font-size:13px;font-weight:600;color:#0a66c2">linkedin.com/in/priya-sharma-ux</div><div style="font-size:11px;color:var(--mid)">Connected · synced</div></div>
+      </div>
+      <div class="pl_" onclick="toast('Opening Dribbble…')">
+        <div class="pio" style="background:#ea4c89;font-size:15px"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#ea4c89">dribbble.com/priya_ux</div><div style="font-size:11px;color:var(--mid)">Portfolio · 12 projects</div></div>
+      </div>
+    </div>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Certificates</p>
+    <div id="certs"></div>
+    <div class="div"></div>
+    <button class="btn gh" style="margin-top:12px;margin-bottom:8px" onclick="go('p-gcal')" style="display:flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Google Calendar</button>
+<button class="btn gh" style="margin-top:0" onclick="go('p-settings')">Settings</button>
+    <button style="display:block;width:100%;margin-top:8px;border:none;background:transparent;color:#c0392b;font-size:14px;font-weight:600;padding:13px;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:100px" onclick="sOut()">Sign out</button>
+  </div>
+  <div class="bn">
+    <div class="ni" onclick="vn('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni" onclick="vn('browse')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Browse</span></div>
+    <div class="ni" onclick="vn('applied')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Applied</span></div>
+    <div class="ni on" onclick="vn('profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="pg" id="p-notif">
+  <div class="nh"><button class="ic" onclick="back()">&#8592;</button><span class="nt">Notifications</span><button class="ic" onclick="toast('All read');document.getElementById('nc').textContent='0'"></button></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:6px" id="nlist"></div>
+</div>
+
+<!-- EDIT PROFILE -->
+<div class="pg" id="p-editp">
+  <div class="nh"><button class="ic" onclick="go('p-profile')">&#8592;</button><span class="nt">Edit profile</span><button class="ic" onclick="toast('Saved');go('p-profile')"></button></div>
+  <div class="bd px" style="padding-top:14px;padding-bottom:80px">
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px">
+      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=120&h=120&fit=crop&crop=face" style="width:62px;height:62px;border-radius:50%;object-fit:cover;border:3px solid var(--bdr);margin-bottom:8px">
+      <button class="btn o sm" onclick="toast('Opening camera…')">Change photo</button>
+    </div>
+    <span class="lbl">Name</span><input class="inp" type="text" value="Priya Sharma">
+    <span class="lbl">Headline</span><input class="inp" type="text" value="UX Designer · Bengaluru">
+    <span class="lbl">Bio</span><textarea class="ta" rows="3" style="margin-bottom:14px">Passionate about making digital products accessible for rural India.</textarea>
+    <span class="lbl">LinkedIn</span><input class="inp" type="url" value="https://linkedin.com/in/priya-sharma-ux">
+    <span class="lbl">Portfolio</span><input class="inp" type="url" value="https://dribbble.com/priya_ux">
+    <button class="btn g" onclick="toast('Saved');go('p-profile')">Save changes</button>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="pg" id="p-settings">
+  <div class="nh"><button class="ic" onclick="go('p-profile')">&#8592;</button><span class="nt">Settings</span><span style="width:32px"></span></div>
+  <div class="bd px" style="padding-top:12px;padding-bottom:80px">
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Notifications</p>
+    <div class="sr"><div><div style="font-size:14px;color:var(--ink)">WhatsApp alerts</div><div style="font-size:12px;color:var(--mid)">Application updates</div></div><div class="tg on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="sr"><div><div style="font-size:14px;color:var(--ink)">Email digest</div><div style="font-size:12px;color:var(--mid)">Daily new matches</div></div><div class="tg on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="sr"><div><div style="font-size:14px;color:var(--ink)">Push</div></div><div class="tg" onclick="this.classList.toggle('on')"></div></div>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px">Privacy</p>
+    <div class="sr" onclick="toast('Visibility: Public to verified NGOs')"><div style="font-size:14px;color:var(--ink)">Profile visibility</div><span style="font-size:12px;color:var(--mid)">Public →</span></div>
+    <div class="sr" onclick="toast('Location: City level only')"><div style="font-size:14px;color:var(--ink)">Location</div><span style="font-size:12px;color:var(--g)">Protected →</span></div>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px">Account</p>
+    <div class="sr" onclick="toast('Change password…')"><div style="font-size:14px;color:var(--ink)">Change password</div><span style="font-size:12px;color:var(--mid)">→</span></div>
+    <div class="sr" onclick="sOut()"><div style="font-size:14px;color:#c0392b">Sign out</div></div>
+  </div>
+</div>
+
+<!--  NGO STEP 1  -->
+<div class="pg" id="p-ns1">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-splash')"></button><span style="font-size:11px;color:var(--mid)">1 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:25%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">NGO details</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">Basic information</p>
+  </div>
+  <div class="bd px" style="padding-bottom:24px">
+    <span class="lbl">Organisation name</span><input class="inp" id="nn" type="text" placeholder="e.g. Pratham Education Foundation">
+    <span class="lbl">Reg. no. (80G / FCRA / Darpan)</span><input class="inp" id="nr" type="text" placeholder="Registration number">
+    <span class="lbl">Category</span>
+    <select class="sel" id="ncat"><option value="">Select…</option><option>Education</option><option>Healthcare</option><option>Environment</option><option>Women Empowerment</option><option>Rural Development</option><option>Child Welfare</option><option>Other</option></select>
+    <span class="lbl">City</span><input class="inp" id="nc_" type="text" placeholder="Bengaluru, Delhi, Mumbai…">
+    <span class="lbl">Website (optional)</span><input class="inp" id="nw" type="url" placeholder="https://yourngo.org">
+    <button class="btn g" onclick="saveNGO()">Continue</button>
+  </div>
+</div>
+
+<div class="pg" id="p-ns2">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-ns1')"></button><span style="font-size:11px;color:var(--mid)">2 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:50%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">Contact</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">Primary coordinator</p>
+  </div>
+  <div class="bd px" style="padding-bottom:24px">
+    <span class="lbl">Name</span><input class="inp" id="ncn" type="text" placeholder="Full name">
+    <span class="lbl">Email</span><input class="inp" id="nem" type="email" placeholder="coordinator@ngo.org">
+    <span class="lbl">Phone</span><input class="inp" id="nph" type="tel" placeholder="+91 98765 43210">
+    <div class="tn" style="margin-bottom:20px"><span style="color:var(--g);font-size:14px;flex-shrink:0"></span><p style="font-size:12px;color:var(--g);line-height:1.5">Shared only with confirmed volunteers</p></div>
+    <button class="btn g" onclick="go('p-ns3')">Continue</button>
+  </div>
+</div>
+
+<div class="pg" id="p-ns3">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-ns2')"></button><span style="font-size:11px;color:var(--mid)">3 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:75%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">About</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">Describe your mission</p>
+  </div>
+  <div class="bd px" style="padding-bottom:24px">
+    <textarea class="ta" id="nab" rows="7" placeholder="Tell volunteers about your mission, programs and impact…" style="margin-bottom:18px"></textarea>
+    <button class="btn g" onclick="go('p-ns4')">Continue</button>
+  </div>
+</div>
+
+<div class="pg" id="p-ns4">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 16px 8px;flex-shrink:0">
+    <button class="ic" onclick="go('p-ns3')"></button><span style="font-size:11px;color:var(--mid)">4 of 4</span><span style="width:32px"></span>
+  </div>
+  <div class="px" style="flex-shrink:0"><div class="pr"><div class="pf" style="width:100%"></div></div>
+    <p style="font-size:21px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:3px">Verification</p>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:18px">Build trust with volunteers</p>
+  </div>
+  <div class="bd px" style="padding-bottom:24px">
+    <div class="vo on" onclick="sv(this)"><div style="font-size:14px;font-weight:700;color:var(--ink)">Darpan Portal</div><div style="font-size:12px;color:var(--mid);margin-top:2px">Verify with Darpan ID</div></div>
+    <div class="vo" onclick="sv(this)"><div style="font-size:14px;font-weight:700;color:var(--ink)">FCRA Certificate</div><div style="font-size:12px;color:var(--mid);margin-top:2px">Upload registration</div></div>
+    <div class="up" id="upl" onclick="doUpl()" style="margin:14px 0">
+      <div id="uico" style="width:36px;height:36px;background:var(--bg);border-radius:9px;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;margin:0 auto 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/></svg></div>
+      <p style="font-size:13px;font-weight:600;color:var(--ink)" id="utxt">Select document</p>
+      <p style="font-size:11px;color:var(--soft);margin-top:2px">PDF, JPG, PNG · max 5 MB</p>
+    </div>
+    <div id="uok" style="display:none;color:var(--g);font-size:13px;font-weight:700;text-align:center;margin-bottom:8px"> Uploaded</div>
+    <div class="ob"><strong>Review 2–3 days</strong> · Verified badge after approval</div>
+    <div style="margin-top:16px"><button class="btn g" onclick="doneNGO()">Complete setup</button></div>
+  </div>
+</div>
+
+<!--  NGO DASH  -->
+<div class="pg" id="p-ndash">
+  <div style="background:#0c1e13;flex-shrink:0;position:relative;overflow:hidden">
+    <!-- NGO community healthcare / charity work -->
+    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.15">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,30,19,.6),rgba(12,30,19,.95))"></div>
+    <div style="position:relative;z-index:2;padding:52px 16px 18px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:38px;height:38px;background:var(--g);border-radius:10px;overflow:hidden;flex-shrink:0"><img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=80&h=80&fit=crop" style="width:100%;height:100%;object-fit:cover"></div>
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:#fff" id="ndn">Teach For Change</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:3px"><span style="color:var(--g)"></span> Verified NGO</div>
+        </div>
+        <button onclick="go('p-nnot')" style="margin-left:auto;background:rgba(255,255,255,.1);border-radius:8px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.65);cursor:pointer;border:none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> <span id="nnc">3</span></button>
+      </div>
+      <div style="display:flex;gap:7px">
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:20px;font-weight:800;color:#fff;font-family:'Sora',sans-serif" id="pcnt">3</div><div style="font-size:10px;color:rgba(255,255,255,.4)">Pending</div></div>
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:20px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">4</div><div style="font-size:10px;color:rgba(255,255,255,.4)">Active</div></div>
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:20px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">28</div><div style="font-size:10px;color:rgba(255,255,255,.4)">Done</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:14px">
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="btn g" style="flex:2;padding:11px;font-size:13px" onclick="go('p-post')">+ Post opportunity</button>
+      <button style="flex:1;border:1.5px solid var(--bdr);border-radius:100px;padding:11px 10px;background:#fff;font-size:12px;cursor:pointer;color:var(--ink)" onclick="go('p-nproj')"> Projects</button>
+    </div>
+    <div class="sh">
+      <span class="st">Applications</span>
+      <span id="pbdg" style="font-size:11px;background:var(--o);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700">3 new</span>
+    </div>
+    <div id="naps"></div>
+    <div class="sh" style="margin-top:8px"><span class="st">Templates</span><span class="sl" onclick="go('p-post')">Use →</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+      <!-- Template cards with contextual images -->
+      <div style="background:#fff;border:1px solid var(--bdr);border-radius:13px;overflow:hidden;cursor:pointer" onclick="go('p-post')">
+        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80" style="width:100%;height:70px;object-fit:cover;display:block">
+        <div style="padding:9px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Website</div><div style="font-size:10px;color:var(--mid)">4 questions</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-radius:13px;overflow:hidden;cursor:pointer" onclick="go('p-post')">
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80" style="width:100%;height:70px;object-fit:cover;display:block">
+        <div style="padding:9px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Logo & Brand</div><div style="font-size:10px;color:var(--mid)">3 questions</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-radius:13px;overflow:hidden;cursor:pointer" onclick="go('p-post')">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80" style="width:100%;height:70px;object-fit:cover;display:block">
+        <div style="padding:9px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Data Report</div><div style="font-size:10px;color:var(--mid)">5 questions</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-radius:13px;overflow:hidden;cursor:pointer" onclick="go('p-post')">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&q=80" style="width:100%;height:70px;object-fit:cover;display:block">
+        <div style="padding:9px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Content</div><div style="font-size:10px;color:var(--mid)">3 questions</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="ni on" onclick="nn('d')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></div>
+    <div class="ni" onclick="nn('p')"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span>Projects</span></div>
+    <div class="ni" onclick="nn('o')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Post</span></div>
+    <div class="ni" onclick="nn('n')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!-- POST OPP -->
+<div class="pg" id="p-post">
+  <div class="nh"><button class="ic" onclick="go('p-ndash')">&#8592;</button><span class="nt">Post opportunity</span><span style="width:32px"></span></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:8px">
+    <div class="fs">
+      <div class="ft_">Basic details</div>
+      <span class="lbl">Title</span><input class="inp" id="pt" type="text" placeholder="e.g. Design Website for Education NGO">
+      <span class="lbl">Category</span>
+      <select class="sel" id="pcat"><option>Select…</option><option>Design</option><option>Engineering</option><option>Marketing</option><option>Data Analysis</option><option>Content Writing</option></select>
+    </div>
+    <div class="fs">
+      <div class="ft_">Skills needed (up to 3)</div>
+      <div id="psg"><span class="tag" onclick="tps(this)">UX Design</span><span class="tag" onclick="tps(this)">UI Design</span><span class="tag" onclick="tps(this)">Figma</span><span class="tag" onclick="tps(this)">Web Dev</span><span class="tag" onclick="tps(this)">React</span><span class="tag" onclick="tps(this)">Python</span><span class="tag" onclick="tps(this)">SEO</span><span class="tag" onclick="tps(this)">Content</span><span class="tag" onclick="tps(this)">Data Analysis</span></div>
+    </div>
+    <div class="fs">
+      <div class="ft_">Logistics</div>
+      <span class="lbl">Hours / week</span><input class="inp" id="phr" type="text" placeholder="e.g. 8–10 hrs/week">
+      <span class="lbl">Duration</span><input class="inp" id="pdu" type="text" placeholder="e.g. 4 weeks">
+      <span class="lbl">Work mode</span>
+      <div style="display:flex;gap:7px;margin-bottom:14px">
+        <button id="pmr" class="pref on" style="flex:1;margin:0;border-radius:9px;padding:10px;font-size:12px" onclick="pm('r')">Remote</button>
+        <button id="pmo" class="pref" style="flex:1;margin:0;border-radius:9px;padding:10px;font-size:12px" onclick="pm('o')">On-site</button>
+        <button id="pmh" class="pref" style="flex:1;margin:0;border-radius:9px;padding:10px;font-size:12px" onclick="pm('h')">Hybrid</button>
+      </div>
+      <span class="lbl">Deadline</span><input class="inp" id="pdl" type="date">
+    </div>
+    <div class="fs">
+      <div class="ft_">Description &amp; impact</div>
+      <textarea class="ta" id="pde" rows="4" placeholder="What will the volunteer do and what impact will they make?"></textarea>
+    </div>
+    <button class="btn g" style="margin-top:12px" onclick="postOpp()">Publish </button>
+    <button class="btn gh" style="margin-top:8px" onclick="go('p-ndash')">Cancel</button>
+  </div>
+</div>
+
+<!-- NGO PROJECTS -->
+<div class="pg" id="p-nproj">
+  <div class="nh"><button class="ic" onclick="go('p-ndash')">&#8592;</button><span class="nt">Projects</span><button class="ic" onclick="go('p-post')">+</button></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:8px" id="nplist"></div>
+  <div class="bn">
+    <div class="ni" onclick="nn('d')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></div>
+    <div class="ni on" onclick="nn('p')"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span>Projects</span></div>
+    <div class="ni" onclick="nn('o')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Post</span></div>
+    <div class="ni" onclick="nn('n')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!-- NGO PROFILE -->
+<div class="pg" id="p-nprof">
+  <div style="background:var(--pl);padding:50px 16px 20px;flex-shrink:0;position:relative;overflow:hidden">
+    <!-- NGO / charity / social work India -->
+    <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800&q=80" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(77,43,57,.5),rgba(77,43,57,.95))"></div>
+    <div style="position:relative;z-index:2">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:54px;height:54px;background:rgba(255,255,255,.2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;border:2px solid rgba(255,255,255,.22);overflow:hidden"><img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=80&h=80&fit=crop" style="width:100%;height:100%;object-fit:cover"></div>
+        <div>
+          <h2 style="color:#fff;font-size:17px;font-family:'Sora',sans-serif" id="npn">Teach For Change</h2>
+          <p style="color:rgba(255,255,255,.6);font-size:12px">Education · Bengaluru</p>
+          <span style="font-size:11px;font-weight:700;color:var(--g);background:rgba(255,255,255,.1);padding:2px 8px;border-radius:100px"> Verified</span>
+        </div>
+        <button style="margin-left:auto;background:rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:12px;color:#fff;border:none;cursor:pointer" onclick="go('p-nedit')">Edit</button>
+      </div>
+      <div style="display:flex;gap:7px">
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">28</div><div style="font-size:10px;color:rgba(255,255,255,.45)">Projects</div></div>
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">94%</div><div style="font-size:10px;color:rgba(255,255,255,.45)">Completion</div></div>
+        <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:9px;padding:10px 4px"><div style="font-size:17px;font-weight:800;color:#fff;font-family:'Sora',sans-serif">4.8</div><div style="font-size:10px;color:rgba(255,255,255,.45)">Rating</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:14px">
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Funded by</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <div class="fb"><span style="font-size:13px"></span><div><div style="font-size:11px;font-weight:700;color:var(--ink)">Gates Foundation</div><div style="font-size:10px;color:var(--mid)">Global philanthropy</div></div></div>
+      <div class="fb"><span style="font-size:13px"></span><div><div style="font-size:11px;font-weight:700;color:var(--ink)">Tata Trusts</div><div style="font-size:10px;color:var(--mid)">India CSR</div></div></div>
+    </div>
+    <div class="div"></div>
+    <button class="btn gh" style="margin-top:12px" onclick="go('p-nset')">Settings</button>
+    <button style="display:block;width:100%;margin-top:8px;border:none;background:transparent;color:#c0392b;font-size:14px;font-weight:600;padding:13px;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:100px" onclick="sOut()">Sign out</button>
+  </div>
+  <div class="bn">
+    <div class="ni" onclick="nn('d')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></div>
+    <div class="ni" onclick="nn('p')"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span>Projects</span></div>
+    <div class="ni" onclick="nn('o')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Post</span></div>
+    <div class="ni on" onclick="nn('n')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+
+<!-- NGO EDIT -->
+<div class="pg" id="p-nedit">
+  <div class="nh"><button class="ic" onclick="go('p-nprof')">&#8592;</button><span class="nt">Edit NGO</span><button class="ic" onclick="toast('Saved');go('p-nprof')"></button></div>
+  <div class="bd px" style="padding-top:14px;padding-bottom:80px">
+    <span class="lbl">Name</span><input class="inp" type="text" value="Teach For Change">
+    <span class="lbl">Tagline</span><input class="inp" type="text" value="Education for every Indian child">
+    <span class="lbl">About</span><textarea class="ta" rows="4" style="margin-bottom:14px">We work to improve educational outcomes for underprivileged children across India.</textarea>
+    <span class="lbl">Funded by</span><input class="inp" type="text" value="Gates Foundation, Tata Trusts">
+    <span class="lbl">Website</span><input class="inp" type="url" value="https://teachforchange.org">
+    <button class="btn g" onclick="toast('Saved');go('p-nprof')">Save changes</button>
+  </div>
+</div>
+
+<!-- NGO SETTINGS -->
+<div class="pg" id="p-nset">
+  <div class="nh"><button class="ic" onclick="go('p-nprof')">&#8592;</button><span class="nt">Settings</span><span style="width:32px"></span></div>
+  <div class="bd px" style="padding-top:12px;padding-bottom:80px">
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Notifications</p>
+    <div class="sr"><div><div style="font-size:14px;color:var(--ink)">WhatsApp alerts</div><div style="font-size:12px;color:var(--mid)">Application updates</div></div><div class="tg on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="sr"><div><div style="font-size:14px;color:var(--ink)">Email digest</div></div><div class="tg on" onclick="this.classList.toggle('on')"></div></div>
+    <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px">Account</p>
+    <div class="sr" onclick="toast('Managing team…')"><div style="font-size:14px;color:var(--ink)">Team members</div><span style="font-size:12px;color:var(--mid)">3 →</span></div>
+    <div class="sr" onclick="sOut()"><div style="font-size:14px;color:#c0392b">Sign out</div></div>
+  </div>
+</div>
+
+<!-- NGO NOTIFICATIONS -->
+<div class="pg" id="p-nnot">
+  <div class="nh"><button class="ic" onclick="go('p-ndash')">&#8592;</button><span class="nt">Notifications</span><button class="ic" onclick="toast('All read');document.getElementById('nnc').textContent='0'"></button></div>
+  <div class="bd px" style="padding-bottom:80px;padding-top:6px">
+    <div class="ni_"><div class="nc" style="background:var(--gl)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--ink)">New application</div><div style="font-size:12px;color:var(--mid)">Priya Sharma · Website design</div><div style="font-size:11px;color:var(--soft);margin-top:2px">2 min ago</div></div></div>
+    <div class="ni_"><div class="nc" style="background:var(--ol)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--o)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--ink)">Project completed</div><div style="font-size:12px;color:var(--mid)">Rohan Verma · Logo design · 4.8</div><div style="font-size:11px;color:var(--soft);margin-top:2px">1 hour ago</div></div></div>
+    <div class="ni_"><div class="nc" style="background:#eef0ff"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--ink)">Verification approved</div><div style="font-size:12px;color:var(--mid)">Darpan approved · verified badge added</div><div style="font-size:11px;color:var(--soft);margin-top:2px">Yesterday</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ GOOGLE CALENDAR PAGE ═══ -->
+<div class="pg" id="p-gcal">
+  <div class="nh">
+    <button class="ic" onclick="back()" style="font-size:16px">&#8592;</button>
+    <span class="nt" style="display:flex;align-items:center;gap:6px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4285F4" stroke-width="2"/>
+        <line x1="16" y1="2" x2="16" y2="6" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/>
+        <line x1="8" y1="2" x2="8" y2="6" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/>
+        <line x1="3" y1="10" x2="21" y2="10" stroke="#4285F4" stroke-width="2"/>
+      </svg>
+      Google Calendar
+    </span>
+    <button class="ic" onclick="gcalAdd()" style="background:var(--g);color:#fff;border-radius:8px;font-size:11px;font-weight:700;width:auto;padding:0 10px;font-family:'Sora',sans-serif">+ Event</button>
+  </div>
+
+  <div class="bd" style="padding-bottom:84px">
+    <!-- Month header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:12px">
+      <div>
+        <p style="font-size:20px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif" id="cal-month-label">April 2026</p>
+        <p style="font-size:12px;color:var(--mid)" id="cal-count-label">3 scheduled this month</p>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button id="cal-prev" onclick="calNav(-1)" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--bdr);background:#fff;cursor:pointer;font-size:15px;color:var(--mid);display:flex;align-items:center;justify-content:center">&#8249;</button>
+        <button id="cal-next" onclick="calNav(1)" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--bdr);background:#fff;cursor:pointer;font-size:15px;color:var(--mid);display:flex;align-items:center;justify-content:center">&#8250;</button>
+      </div>
+    </div>
+
+    <!-- Day-of-week labels -->
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);padding:0 16px;margin-bottom:4px">
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Sun</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Mon</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Tue</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Wed</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Thu</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Fri</div>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:var(--soft);padding:3px 0">Sat</div>
+    </div>
+
+    <!-- Calendar grid -->
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);padding:0 16px;gap:2px;margin-bottom:18px"></div>
+
+    <!-- Selected day events -->
+    <div style="padding:0 16px">
+      <p id="cal-sel-label" style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;font-family:'Sora',sans-serif">Saturday, 20 April</p>
+      <div id="cal-day-events" style="margin-bottom:18px"></div>
+
+      <!-- Upcoming events list -->
+      <p style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Upcoming</p>
+      <div id="cal-upcoming"></div>
+    </div>
+  </div>
+
+  <div class="bn">
+    <div class="ni" onclick="vn('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni" onclick="vn('browse')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Browse</span></div>
+    <div class="ni" onclick="vn('applied')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Applied</span></div>
+    <div class="ni on" onclick="vn('profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+  </div>
+</div>
+<!-- END GCAL PAGE -->
+
+
+  </div></div></div>
+
+<script>
+//  DATA 
+const D={
+  role:null,skn:0,skills:[],saved:[],applied:[],hist:[],ngo:{},psk:0,fcat:'all',
+  // Contextual, relevant Unsplash images per opportunity
+  opps:[
+    {id:0,org:'Teach For Change',logo:'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=80&h=80&fit=crop',s:'T',c:'#6c47ff',type:'Education',title:'Design website for education NGO',
+     skills:['UI Design','Figma','Web Dev'],img:'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=750&q=80',
+     meta:'Remote · 8–10 hrs/wk',funders:['Gates Foundation','Tata Trusts'],
+     about:'Design a mobile-responsive website showcasing our education programs, easy to update by non-technical staff.',
+     reqs:['Figma experience','Web design portfolio','4-week delivery'],
+     impact:'Reach 10,000+ students across India',deadline:'Apr 15, 2026',apps:12,posted:'Mar 5',
+     rating:'4.8',compl:'94%',projs:28,cat:'design'},
+    {id:1,org:'HealthFirst India',logo:'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=80&h=80&fit=crop',s:'H',c:'#e8821a',type:'Healthcare',title:'SEO strategy for healthcare awareness',
+     skills:['SEO','Digital Mktg','Content'],img:'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=750&q=80',
+     meta:'Remote · 5–7 hrs/wk',funders:['WHO India','Azim Premji Fdn'],
+     about:'Improve our digital presence so rural communities can discover free healthcare services near them.',
+     reqs:['2+ years SEO experience','Google Analytics','Healthcare sector a plus'],
+     impact:'50,000+ rural families find free healthcare',deadline:'May 1, 2026',apps:8,posted:'Mar 10',
+     rating:'4.5',compl:'88%',projs:15,cat:'marketing'},
+    {id:2,org:'Green Earth Foundation',logo:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=80&h=80&fit=crop',s:'G',c:'#3d6b4f',type:'Environment',title:'Data analysis for impact reporting',
+     skills:['Data Analysis','Excel','Visualization'],img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=750&q=80',
+     meta:'Remote · 6–8 hrs/wk',funders:['WWF India','Infosys CSR'],
+     about:'Analyse field survey data and create visualisations for our annual impact report for donors.',
+     reqs:['Excel & Python/R','Data visualisation tools','Clear communication'],
+     impact:'Policy changes affecting 200,000+ farmers in Rajasthan',deadline:'Apr 30, 2026',apps:6,posted:'Mar 8',
+     rating:'4.7',compl:'91%',projs:22,cat:'data'},
+    {id:3,org:'Pratham Foundation',logo:'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=80&h=80&fit=crop',s:'P',c:'#c0392b',type:'Education',title:'Redesign learning app for rural students',
+     skills:['UX Design','Figma','User Research'],img:'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=750&q=80',
+     meta:'Remote · 8–12 hrs/wk',funders:['USAID','UNICEF India'],
+     about:'UX audit and wireframes optimised for low-end Android devices used by rural students.',
+     reqs:['UX audit experience','Figma proficiency','Mobile-first design'],
+     impact:'2,40,000+ rural students get better learning outcomes',deadline:'Apr 20, 2026',apps:12,posted:'Mar 3',
+     rating:'4.9',compl:'97%',projs:42,cat:'design'},
+    {id:4,org:'Goonj',logo:'https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=80&h=80&fit=crop',s:'G',c:'#2c3e50',type:'Social Impact',title:'Write impact stories for annual report',
+     skills:['Content Writing','Copywriting','Research'],img:'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=750&q=80',
+     meta:'Remote · 4–6 hrs/wk',funders:['Rockefeller Fdn','GIZ India'],
+     about:'Turn raw field notes into compelling impact narratives for our annual report and donor updates.',
+     reqs:['Excellent English writing','Interview skills','Sensitivity to social issues'],
+     impact:'Amplify stories of 1,000+ beneficiaries',deadline:'May 15, 2026',apps:4,posted:'Mar 12',
+     rating:'4.6',compl:'90%',projs:19,cat:'marketing'},
+    {id:5,org:'iTeach Schools',logo:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=80&h=80&fit=crop',s:'i',c:'#8e44ad',type:'EdTech',title:'Build offline learning tool in React',
+     skills:['React','JavaScript','Mobile Dev'],img:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=750&q=80',
+     meta:'Remote · 10–12 hrs/wk',funders:['Omidyar Network','Wipro Fdn'],
+     about:'Lightweight React PWA that works offline on low-spec Android devices for students without internet.',
+     reqs:['React + PWA experience','Performance optimisation','Service workers knowledge'],
+     impact:'15,000+ Pune students study without internet',deadline:'May 5, 2026',apps:9,posted:'Mar 1',
+     rating:'4.4',compl:'85%',projs:11,cat:'tech'},
+    {id:6,org:'SOS Villages India',logo:'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=80&h=80&fit=crop',s:'S',c:'#d35400',type:'Child Welfare',title:'Social media campaign for child safety',
+     skills:['Social Media','Canva','Digital Mktg'],img:'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=750&q=80',
+     meta:'Remote · 5–8 hrs/wk',funders:['UNICEF','Aarav Foundation'],
+     about:'Create a 30-day campaign raising awareness about child safety in rural India across Instagram, Facebook, WhatsApp.',
+     reqs:['Social media management','Canva/Adobe experience','Hindi preferred'],
+     impact:'5 lakh parents reached with child safety messaging',deadline:'Apr 25, 2026',apps:7,posted:'Mar 11',
+     rating:'4.3',compl:'82%',projs:9,cat:'marketing'},
+    {id:7,org:'Gram Vikas',logo:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=80&h=80&fit=crop',s:'G',c:'#16a085',type:'Rural Dev',title:'Map village water sources with GIS',
+     skills:['GIS','Data Analysis','Research'],img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=750&q=80',
+     meta:'Hybrid · 8–10 hrs/wk',funders:['Ford Foundation','DFID India'],
+     about:'Use QGIS to map existing water sources in Odisha villages and identify gaps for our water access program.',
+     reqs:['QGIS/ArcGIS experience','Data analysis skills','2 online workshops'],
+     impact:'Water access for 40,000 rural residents in Odisha',deadline:'May 10, 2026',apps:3,posted:'Mar 9',
+     rating:'4.8',compl:'93%',projs:33,cat:'data'},
+  ],
+  aps:[
+    {id:1,name:'Priya Sharma',role:'UX Designer · Bengaluru · 4 yrs',
+     img:'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&h=80&fit=crop&crop=face',
+     str:'Strong ',sc:'spg',q1:'dribbble.com/priya_ux — 3 UX case studies incl. govt portal',q2:'Redesigned e-learning platform for 3 Karnataka schools. +40% task completion.',q3:' Weekends · 8–10 hrs/wk from April',status:'pending'},
+    {id:2,name:'Rohan Verma',role:'Product Designer · Mumbai · 2 yrs',
+     img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face',
+     str:'Good',sc:'spo',q1:'behance.net/rohanverma — 2 startup websites',q2:'Built landing pages for 2 startups using Figma + Webflow.',q3:' Evenings + weekends',status:'pending'},
+    {id:3,name:'Dev Anand',role:'UI/UX · Remote (USA)',
+     img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+     str:'Review',sc:'spb',q1:'linkedin.com/in/devanand — fintech UI',q2:'Data dashboards for fintech companies.',q3:'Note: Timezone overlap limited',status:'pending'},
+  ],
+  nps:[
+    {t:'Design a website',s:'active',v:'Priya Sharma',due:'Apr 15'},
+    {t:'Logo redesign',s:'completed',v:'Rohan Verma',due:'Mar 1'},
+    {t:'Social media kit',s:'completed',v:'Anjali Mehta',due:'Feb 15'},
+    {t:'Data dashboard',s:'pending',v:'Unassigned',due:'May 1'},
+  ],
+  certs:[
+    {i:'',t:'Digital Literacy Program',o:'Akshara Foundation · Jan 2026',bg:'linear-gradient(135deg,#3d6b4f,#2b4d39)'},
+    {i:'',t:'NGO Website Redesign',o:'Goonj · Nov 2025',bg:'linear-gradient(135deg,#4a5adf,#2d3db0)'},
+  ],
+  cur:0
+};
+
+//  NAV 
+let cur='p-splash';
+function go(id){
+  D.hist.push(cur);
+  document.getElementById(cur).classList.remove('on');
+  document.getElementById(id).classList.add('on');
+  document.getElementById(id).scrollTop=0;
+  cur=id;
+  if(id==='p-home')rHome();
+  if(id==='p-gcal')rCal();
+  if(id==='p-browse')rBrowse();
+  if(id==='p-applied')rApplied();
+  if(id==='p-profile')rProfile();
+  if(id==='p-notif')rNotif();
+  if(id==='p-ndash')rDash();
+  if(id==='p-nproj')rNProj();
+}
+function back(){
+  if(!D.hist.length)return;
+  const p=D.hist.pop();
+  document.getElementById(cur).classList.remove('on');
+  document.getElementById(p).classList.add('on');
+  document.getElementById(p).scrollTop=0;
+  cur=p;
+}
+function setRole(r){D.role=r}
+function vn(s){go({home:'p-home',browse:'p-browse',applied:'p-applied',profile:'p-profile'}[s])}
+function nn(s){go({d:'p-ndash',p:'p-nproj',o:'p-post',n:'p-nprof'}[s])}
+
+//  TOAST 
+let TT;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(TT);TT=setTimeout(()=>t.classList.remove('on'),2400)}
+
+//  VOL ONBOARDING 
+function tsk(el){
+  if(el.classList.contains('on')){el.classList.remove('on');D.skn--;D.skills=D.skills.filter(s=>s!==el.textContent)}
+  else if(D.skn<3){el.classList.add('on');D.skn++;D.skills.push(el.textContent)}
+  else{toast('Max 3 skills');return}
+  document.getElementById('skc').textContent=D.skn+'/3';
+  document.getElementById('skbtn').disabled=D.skn===0;
+}
+function pp(el){
+  const par=el.parentElement,kids=Array.from(par.children);
+  let s=kids.indexOf(el),e=s;
+  while(s>0&&kids[s-1].classList&&kids[s-1].classList.contains('pref'))s--;
+  while(e<kids.length-1&&kids[e+1].classList&&kids[e+1].classList.contains('pref'))e++;
+  for(let i=s;i<=e;i++)if(kids[i].classList)kids[i].classList.remove('on');
+  el.classList.add('on');
+}
+function sendOTP(){
+  if(!document.getElementById('ph').value){toast('Enter your phone number');return}
+  toast('Verification code sent via WhatsApp');
+  document.getElementById('otp-s').style.display='block';
+}
+function oi(el){if(el.value&&el.nextElementSibling)el.nextElementSibling.focus()}
+function verOTP(){toast('Phone verified. Setting up your account…');setTimeout(()=>{go('p-home');rProfile()},700)}
+
+//  CARD HTML 
+function cHTML(o){
+  return`<div class="card" onclick="openOpp(${o.id})">
+    <img src="${o.img}" class="ci">
+    <div class="cb">
+      <div class="or"><img src="${o.logo}" class="ngo-av"><div><div style="display:flex;align-items:center;gap:5px"><span class="on_">${o.org}</span><span class="vb" style="display:inline-flex;align-items:center;gap:2px;font-size:10px;background:var(--gl);color:var(--g);padding:1px 6px;border-radius:4px;font-weight:700"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verified</span></div><div class="ot">${o.type}</div></div></div>
+      <div class="fw"><span style="font-size:10px;color:var(--soft);font-weight:600">Funded:</span>${o.funders.map(f=>`<span class="ft">${f}</span>`).join('')}</div>
+      <div class="ct">${o.title}</div>
+      <div class="ps">${o.skills.map(s=>`<span class="pl">${s}</span>`).join('')}</div>
+      <div class="mt"><span class="mi" style="display:flex;align-items:center;gap:3px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${o.meta.split('·')[0].trim()}</span><span class="mi" style="display:flex;align-items:center;gap:3px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${o.meta.split('·')[1].trim()}</span><span class="mi" style="display:flex;align-items:center;gap:3px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${o.apps}</span></div>
+    </div>
+  </div>`;
+}
+
+//  HOME 
+function rHome(){document.getElementById('hcards').innerHTML=D.opps.slice(0,3).map(o=>cHTML(o)).join('')}
+
+//  BROWSE 
+function rBrowse(){
+  const q=(document.getElementById('si')||{value:''}).value.toLowerCase();
+  const f=D.opps.filter(o=>{
+    const mq=!q||o.title.toLowerCase().includes(q)||o.org.toLowerCase().includes(q)||o.skills.some(s=>s.toLowerCase().includes(q));
+    const mc=D.fcat==='all'||o.cat===D.fcat;
+    return mq&&mc;
+  });
+  document.getElementById('oc').textContent=f.length+' opportunities';
+  document.getElementById('blist').innerHTML=f.map(o=>cHTML(o)).join('')||'<p style="text-align:center;color:var(--mid);padding:32px">Nothing found</p>';
+}
+function fc(el,cat){
+  document.querySelectorAll('#p-browse .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');D.fcat=cat;rBrowse();
+}
+
+//  DETAIL 
+function openOpp(id){
+  D.cur=id;const o=D.opps[id];
+  document.getElementById('di').src=o.img;
+  const done=D.applied.some(a=>a.id===id);
+  const ab=document.getElementById('acta');
+  ab.textContent=done?'Already applied':'Apply for this project';
+  ab.onclick=done?()=>toast('Already applied'):()=>go('p-apply');
+  document.getElementById('svb').textContent=D.saved.includes(id)?'':'';
+  document.getElementById('atitle').textContent='Apply to '+o.org;
+  document.getElementById('dc').innerHTML=`
+    <div class="or" style="margin-bottom:8px"><img src="${o.logo}" class="ngo-av" style="width:38px;height:38px;border-radius:9px;"><div><div style="display:flex;align-items:center;gap:4px"><span style="font-size:13px;font-weight:700;color:var(--ink)">${o.org}</span><span class="vb">&#10003; Verified</span></div><div class="ot">${o.type}</div></div></div>
+    <h2 style="font-size:17px;margin-bottom:7px;line-height:1.3;font-family:'Sora',sans-serif">${o.title}</h2>
+    <div class="ps" style="margin-bottom:10px">${o.skills.map(s=>`<span class="pl">${s}</span>`).join('')}</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      ${o.meta.split('·').map(m=>`<span style="background:var(--bg);border:1px solid var(--bdr);border-radius:7px;padding:5px 9px;font-size:11px;color:var(--mid)">${m.trim()}</span>`).join('')}
+    </div>
+    <div class="tp">
+      <div class="tpt">Trust &amp; Credibility</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px">${o.funders.map(f=>`<div class="fb"><span style="font-size:12px"></span><div style="font-size:11px;font-weight:700;color:var(--ink)">${f}</div></div>`).join('')}</div>
+      <div style="display:flex;gap:6px">
+        <div class="mb"><div class="mn" style="color:var(--g)">${o.rating}</div><div class="ml">Rating</div></div>
+        <div class="mb"><div class="mn" style="color:var(--o)">${o.compl}</div><div class="ml">Completion</div></div>
+        <div class="mb"><div class="mn" style="color:#4a5adf">${o.projs}</div><div class="ml">Projects</div></div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:12px">${o.about}</p>
+    <p style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;font-family:'Sora',sans-serif">Requirements</p>
+    <ul style="list-style:none;margin-bottom:12px">${o.reqs.map(r=>`<li style="display:flex;gap:7px;font-size:13px;color:var(--ink);margin-bottom:5px;align-items:flex-start"><span style="color:var(--g);flex-shrink:0"></span>${r}</li>`).join('')}</ul>
+    <div class="gb"><p style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:3px;font-family:'Sora',sans-serif">Your impact</p><p style="font-size:13px;color:var(--ink);line-height:1.5">${o.impact}</p></div>
+    <div class="ob"><strong>Deadline:</strong> ${o.deadline}</div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px"><span style="font-size:11px;color:var(--mid)">${o.apps} applicants</span><span style="font-size:11px;color:var(--mid)">Posted ${o.posted}</span></div>`;
+  go('p-detail');
+}
+function tSave(){
+  const i=D.saved.indexOf(D.cur);
+  if(i>-1){D.saved.splice(i,1);document.getElementById('svb').textContent='';toast('Removed from saved')}
+  else{D.saved.push(D.cur);document.getElementById('svb').textContent='';toast('Saved ')}
+}
+
+//  APPLY 
+let av='y';
+function pa(v){av=v;document.getElementById('avy').classList.toggle('on',v==='y');document.getElementById('avn').classList.toggle('on',v==='n')}
+function subApp(){
+  if(!document.getElementById('q1').value){toast('Add your portfolio link');return}
+  if(!document.getElementById('q2').value){toast('Describe your project');return}
+  const o=D.opps[D.cur];
+  D.applied.push({id:D.cur,title:o.title,org:o.org,c:o.c,s:o.s,status:'pending',date:'Just now'});
+  document.getElementById('sm').style.display='flex';
+}
+function afterApp(){document.getElementById('sm').style.display='none';go('p-browse')}
+
+//  APPLIED 
+function rApplied(){
+  const el=document.getElementById('alist');
+  if(!D.applied.length){
+    el.innerHTML=`<div style="text-align:center;padding:48px 20px"><div style="width:48px;height:48px;background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><p style="font-size:16px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:8px">No applications yet</p><p style="font-size:13px;color:var(--mid);margin-bottom:18px">Browse to find matching opportunities</p><button class="btn g" style="width:auto;padding:12px 24px" onclick="vn('browse')">Browse</button></div>`;
+    return;
+  }
+  el.innerHTML=D.applied.map((a,i)=>`
+    <div class="pc" onclick="openOpp(${a.id})">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+        <div class="av" style="background:${a.c};width:28px;height:28px;flex-shrink:0;font-size:11px">${a.s}</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--ink)">${a.title}</div><div style="font-size:11px;color:var(--mid)">${a.org}</div></div>
+        <span class="sp ${a.status==='pending'?'spo':a.status==='accepted'?'spg':'spd'}">${a.status==='pending'?'Pending':a.status==='accepted'?'Accepted':'Declined'}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--soft)">Applied ${a.date}</span>
+        <button class="btn gh" style="padding:5px 12px;font-size:11px;width:auto;display:inline-block;border-radius:100px" onclick="event.stopPropagation();D.applied.splice(${i},1);rApplied();toast('Withdrawn')">Withdraw</button>
+      </div>
+    </div>`).join('');
+}
+
+//  PROFILE 
+function rProfile(){
+  const skills=D.skills.length?D.skills:['UX Design','Data Analysis','Translation'];
+  document.getElementById('pskills').innerHTML=skills.map(s=>`<span class="tag on" style="cursor:default">${s}</span>`).join('');
+  document.getElementById('certs').innerHTML=D.certs.map(c=>`
+    <div style="background:#fff;border:1px solid var(--bdr);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;gap:10px;align-items:center">
+      <div style="width:34px;height:34px;background:${c.bg};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${c.i}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--ink)">${c.t}</div><div style="font-size:11px;color:var(--mid)">${c.o}</div></div>
+      <button style="font-size:11px;color:var(--g);font-weight:700;background:none;border:none;cursor:pointer" onclick="toast('Sharing to LinkedIn')">Share ↗</button>
+    </div>`).join('');
+  document.getElementById('pjc').textContent=D.applied.filter(a=>a.status==='completed').length+3;
+}
+
+//  NOTIF 
+function rNotif(){
+  const items=[
+    {i:'',bg:'var(--gl)',t:'Application submitted',s:'Teach For Change · under review',ti:'Just now'},
+    {i:'',bg:'var(--gl)',t:'Certificate earned',s:'Digital Literacy · Akshara Foundation',ti:'Yesterday'},
+    {i:'',bg:'var(--ol)',t:'New matches',s:'6 projects match your skills',ti:'2 days ago'},
+  ];
+  document.getElementById('nlist').innerHTML=items.map(n=>`<div class="ni_"><div class="nc" style="background:${n.bg}">${n.i}</div><div><div style="font-size:13px;font-weight:600;color:var(--ink)">${n.t}</div><div style="font-size:12px;color:var(--mid)">${n.s}</div><div style="font-size:11px;color:var(--soft);margin-top:2px">${n.ti}</div></div></div>`).join('');
+  document.getElementById('nc').textContent='0';
+}
+
+//  NGO ONBOARDING 
+function saveNGO(){
+  const n=document.getElementById('nn').value,r=document.getElementById('nr').value;
+  if(!n||!r){toast('Fill in name and registration number');return}
+  D.ngo.name=n;
+  ['ndn','npn'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=n});
+  go('p-ns2');
+}
+function sv(el){document.querySelectorAll('.vo').forEach(v=>v.classList.remove('on'));el.classList.add('on')}
+let uplD=false;
+function doUpl(){
+  if(uplD)return;uplD=true;
+  const u=document.getElementById('upl');u.classList.add('done');
+  document.getElementById('uico').textContent='';
+  document.getElementById('utxt').textContent='certificate.pdf';
+  document.getElementById('uok').style.display='block';
+  toast('Uploaded');
+}
+function doneNGO(){toast('Welcome to SkillBridge!');setTimeout(()=>go('p-ndash'),600)}
+
+//  NGO DASH 
+function rDash(){
+  const p=D.aps.filter(a=>a.status==='pending');
+  document.getElementById('pcnt').textContent=p.length;
+  document.getElementById('pbdg').textContent=p.length+' new';
+  document.getElementById('naps').innerHTML=p.map(a=>`
+    <div class="ac">
+      <div class="ach">
+        <img src="${a.img}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #fff;flex-shrink:0">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--ink)">${a.name}</div><div style="font-size:11px;color:var(--mid)">${a.role}</div></div>
+        <span class="sp ${a.sc}">${a.str}</span>
+      </div>
+      <div class="alk">
+        <button class="al" onclick="toast('Opening LinkedIn for ${a.name}…')"> LinkedIn</button>
+        <button class="al" onclick="toast('Opening portfolio…')"> Portfolio</button>
+      </div>
+      <div class="aqa">
+        <div class="ql">Portfolio</div><div class="qt">${a.q1}</div>
+        <div class="ql">Experience</div><div class="qt">${a.q2}</div>
+        <div class="ql">Availability</div><div class="qt">${a.q3}</div>
+      </div>
+      <div class="aac">
+        <button class="ab ay" onclick="confA(${a.id})">Confirm </button>
+        <button class="ab an" onclick="decA(${a.id})">Decline </button>
+      </div>
+    </div>`).join('')||'<p style="text-align:center;color:var(--mid);padding:20px 0">No pending applications</p>';
+}
+function confA(id){
+  const a=D.aps.find(x=>x.id===id);if(a){a.status='confirmed';toast(a.name+' confirmed. WhatsApp notification sent.')}
+  const va=D.applied.find(x=>x.org==='Teach For Change'&&x.status==='pending');if(va)va.status='accepted';
+  rDash();
+}
+function decA(id){
+  const a=D.aps.find(x=>x.id===id);if(a){a.status='declined';toast('Declined · email sent to '+a.name)}
+  rDash();
+}
+function rNProj(){
+  document.getElementById('nplist').innerHTML=D.nps.map((p,i)=>`
+    <div class="pc">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:14px;font-weight:700;color:var(--ink);font-family:'Sora',sans-serif">${p.t}</div>
+        <span class="sp ${p.s==='active'?'spg':p.s==='completed'?'spb':'spo'}">${p.s}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:var(--mid)">${p.v}</span>
+        <span style="font-size:12px;color:var(--mid)">Due ${p.due}</span>
+      </div>
+      ${p.s==='active'?`<button class="btn g" style="margin-top:8px;padding:8px;font-size:12px" onclick="D.nps[${i}].s='completed';rNProj();toast('Marked as complete')">Mark complete</button>`:''}
+    </div>`).join('');
+}
+
+//  POST OPP 
+function tps(el){
+  if(el.classList.contains('on')){el.classList.remove('on');D.psk--}
+  else if(D.psk<3){el.classList.add('on');D.psk++}
+  else toast('Max 3 skills');
+}
+function pm(m){['r','o','h'].forEach(x=>document.getElementById('pm'+x).classList.remove('on'));document.getElementById('pm'+m).classList.add('on')}
+function postOpp(){
+  const t=document.getElementById('pt').value,d=document.getElementById('pde').value;
+  if(!t||!d){toast('Add a title and description');return}
+  const sk=Array.from(document.querySelectorAll('#psg .tag.on')).map(e=>e.textContent);
+  D.opps.push({id:D.opps.length,org:D.ngo.name||'Teach For Change',s:'T',c:'#3d6b4f',
+    type:document.getElementById('pcat').value||'General',title:t,skills:sk.length?sk:['General'],
+    img:'https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=750&q=80',
+    meta:'Remote · '+(document.getElementById('phr').value||'TBD'),funders:['Your NGO'],
+    about:d,reqs:['See description'],impact:'Make a real difference',
+    deadline:document.getElementById('pdl').value||'TBD',apps:0,posted:'Today',
+    rating:'New',compl:'–',projs:28,cat:'design'});
+  D.nps.unshift({t,s:'pending',v:'Unassigned',due:document.getElementById('pdl').value||'TBD'});
+  toast('Project published. Volunteers can now apply.');
+  setTimeout(()=>go('p-ndash'),600);
+}
+function sOut(){D.applied=[];D.skn=0;D.skills=[];go('p-splash');toast('Signed out')}
+
+//  INIT 
+// ── GOOGLE CALENDAR ENGINE ────────────────────────────────────────────────────
+const CAL = {
+  month:3, year:2026, sel:20,
+  events:{
+    8:  [{title:'Team standup',time:'9:00 AM',dur:'30 min',color:'#4285F4',meet:true}],
+    13: [{title:'Volunteer orientation',time:'11:00 AM',dur:'1 hr',color:'#0f9d58',meet:true}],
+    15: [{title:'Project brief review',time:'2:00 PM',dur:'45 min',color:'#f4b400',meet:false}],
+    20: [
+      {title:'Kickoff — Teach For Change',time:'10:00 AM',dur:'1 hr',color:'#0f9d58',meet:true},
+      {title:'Design feedback',time:'3:00 PM',dur:'30 min',color:'#4285F4',meet:true}
+    ],
+    22: [{title:'Weekly sync',time:'10:00 AM',dur:'1 hr',color:'#0f9d58',meet:true}],
+    27: [{title:'Weekly sync',time:'10:00 AM',dur:'1 hr',color:'#0f9d58',meet:true}],
+    29: [{title:'Milestone review',time:'4:00 PM',dur:'1 hr',color:'#db4437',meet:true}]
+  },
+  added:[]
+};
+const MNAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DNAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function rCal(){
+  renderCalGrid();
+  renderCalDay(CAL.sel);
+  renderCalUpcoming();
+  var lbl=document.getElementById('cal-month-label');
+  if(lbl)lbl.textContent=MNAMES[CAL.month]+' '+CAL.year;
+  var cnt=document.getElementById('cal-count-label');
+  var total=Object.values(CAL.events).reduce(function(a,b){return a+b.length;},0)+CAL.added.length;
+  if(cnt)cnt.textContent=total+' events this month';
+}
+
+function renderCalGrid(){
+  var grid=document.getElementById('cal-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  var firstDay=new Date(CAL.year,CAL.month,1).getDay();
+  var daysInMonth=new Date(CAL.year,CAL.month+1,0).getDate();
+  var today=new Date();
+  var isCur=(today.getFullYear()===CAL.year&&today.getMonth()===CAL.month);
+  for(var i=0;i<firstDay;i++){
+    var e=document.createElement('div');e.className='cal-cell inactive';grid.appendChild(e);
+  }
+  for(var d=1;d<=daysInMonth;d++){
+    var el=document.createElement('div');
+    el.className='cal-cell';
+    if(isCur&&d===today.getDate())el.classList.add('today');
+    if(d===CAL.sel)el.classList.add('sel');
+    el.innerHTML='<span>'+d+'</span>';
+    var evs=(CAL.events[d]||[]).concat(CAL.added.filter(function(e){return e.day===d;}));
+    if(evs.length){
+      var dotRow=document.createElement('div');dotRow.className='ev-dot';
+      evs.slice(0,3).forEach(function(ev){
+        var pip=document.createElement('div');pip.className='ev-dot-pip';
+        pip.style.background=ev.color||'var(--g)';dotRow.appendChild(pip);
+      });
+      el.appendChild(dotRow);
+    }
+    (function(dd){el.onclick=function(){CAL.sel=dd;renderCalGrid();renderCalDay(dd);};})(d);
+    grid.appendChild(el);
+  }
+}
+
+function renderCalDay(d){
+  var dayOfWeek=new Date(CAL.year,CAL.month,d).getDay();
+  var lbl=document.getElementById('cal-sel-label');
+  if(lbl)lbl.textContent=DNAMES[dayOfWeek]+', '+d+' '+MNAMES[CAL.month];
+  var container=document.getElementById('cal-day-events');
+  if(!container)return;
+  var evs=(CAL.events[d]||[]).concat(CAL.added.filter(function(e){return e.day===d;}));
+  if(!evs.length){
+    container.innerHTML='<p style="font-size:13px;color:var(--soft);padding:10px 0">No events — tap + Event to add one.</p>';
+    return;
+  }
+  container.innerHTML=evs.map(function(ev){
+    return '<div class="gcal-event" onclick="toast(\''+ev.title+'\')">'
+      +'<div class="gcal-color-bar" style="background:'+ev.color+'"></div>'
+      +'<div class="gcal-event-body">'
+      +'<div class="gcal-event-title">'+ev.title+'</div>'
+      +'<div class="gcal-event-sub">'+ev.time+' &middot; '+ev.dur+(ev.meet?' &middot; <span style="color:#4285F4;font-weight:600">Google Meet</span>':'')+'</div>'
+      +'</div>'
+      +(ev.meet?'<div class="gcal-event-tag" style="background:#e8f0fe;color:#4285F4;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px">Meet</div>':'')
+      +'</div>';
+  }).join('');
+}
+
+function renderCalUpcoming(){
+  var container=document.getElementById('cal-upcoming');
+  if(!container)return;
+  var upcoming=[];
+  Object.keys(CAL.events).forEach(function(day){
+    if(parseInt(day)>=CAL.sel){
+      CAL.events[day].forEach(function(ev){upcoming.push(Object.assign({},ev,{day:parseInt(day)}));});
+    }
+  });
+  CAL.added.filter(function(e){return e.day>=CAL.sel;}).forEach(function(e){upcoming.push(e);});
+  upcoming.sort(function(a,b){return a.day-b.day;});
+  if(!upcoming.length){container.innerHTML='<p style="font-size:13px;color:var(--soft)">No upcoming events.</p>';return;}
+  container.innerHTML=upcoming.slice(0,6).map(function(ev){
+    var dow=new Date(CAL.year,CAL.month,ev.day).getDay();
+    return '<div class="gcal-event" onclick="CAL.sel='+ev.day+';renderCalGrid();renderCalDay('+ev.day+')">'
+      +'<div class="gcal-color-bar" style="background:'+ev.color+'"></div>'
+      +'<div class="gcal-event-body">'
+      +'<div class="gcal-event-title">'+ev.title+'</div>'
+      +'<div class="gcal-event-sub">'+DNAMES[dow].slice(0,3)+' '+ev.day+' '+MNAMES[CAL.month].slice(0,3)+' &middot; '+ev.time+(ev.meet?' &middot; <span style="color:#4285F4;font-weight:600">Meet</span>':'')+'</div>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function calNav(dir){
+  CAL.month+=dir;
+  if(CAL.month>11){CAL.month=0;CAL.year++;}
+  if(CAL.month<0){CAL.month=11;CAL.year--;}
+  CAL.sel=1;rCal();
+}
+
+function gcalAdd(){
+  var title=prompt('Event title:');
+  if(!title)return;
+  CAL.added.push({title:title,time:'10:00 AM',dur:'1 hr',color:'#0f9d58',meet:true,day:CAL.sel});
+  renderCalGrid();renderCalDay(CAL.sel);renderCalUpcoming();
+  toast('Event added to Google Calendar');
+}
+
+function openCalForOpp(id){
+  var o=D.opps[id];
+  if(o){
+    var ev={title:'Kickoff \u2014 '+o.org,time:'10:00 AM',dur:'1 hr',color:'#0f9d58',meet:true,day:20};
+    if(!CAL.added.some(function(e){return e.title===ev.title;})){CAL.added.push(ev);}
+  }
+  go('p-gcal');rCal();
+}
+
+rHome();rBrowse();rProfile();rDash();
+
+// iOS Safari specific install nudge
+(function(){
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone;
+  if(isIOS && isSafari && !isStandalone){
+    setTimeout(function(){
+      var bar = document.getElementById('pwa-bar');
+      if(bar){
+        bar.querySelector('div:nth-child(2) div:first-child').textContent = 'Install on iPhone';
+        bar.querySelector('div:nth-child(2) div:last-child').textContent = 'Tap Share → Add to Home Screen';
+        bar.querySelector('button:first-of-type').textContent = 'How?';
+        bar.querySelector('button:first-of-type').onclick = function(){
+          alert('To install SkillBridge on your iPhone:\n\n1. Tap the Share button (box with arrow) at the bottom of Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"\n\nSkillBridge will appear on your home screen like a real app!');
+        };
+        bar.classList.add('show');
+      }
+    }, 2500);
+  }
+})();
+
+
+// Dismiss PWA launch screen
+(function(){
+  var launch = document.getElementById('pwa-launch');
+  if(launch){
+    setTimeout(function(){
+      launch.classList.add('gone');
+      setTimeout(function(){ launch.style.display='none'; }, 600);
+    }, 1200);
+  }
+})();
+
+</script>
+</body>
+</html>
